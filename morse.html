@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+GRACIAS al autor de codigo morse en la pagina:
+
+    https://codingartistweb.com/2023/09/morse-code-traslator
+
+Yo simplemente lo uni en un solo archivo y lo hice compatible
+con Internet Explorer antiguo al conversor de codigo morse.
+-->
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8">
+
+<title>Morse Code Translator</title>
+
+<script>
+//Morse Code Dictionary
+//You can expand this as needed
+var morseCode = {
+A: ".-",
+B: "-...",
+C: "-.-.",
+D: "-..",
+E: ".",
+F: "..-.",
+G: "--.",
+H: "....",
+I: "..",
+J: ".---",
+K: "-.-",
+L: ".-..",
+M: "--",
+N: "-.",
+O: "---",
+P: ".--.",
+Q: "--.-",
+R: ".-.",
+S: "...",
+T: "-",
+U: "..-",
+V: "...-",
+W: ".--",
+X: "-..-",
+Y: "-.--",
+Z: "--..",
+0: "-----",
+1: ".----",
+2: "..---",
+3: "...--",
+4: "....-",
+5: ".....",
+6: "-....",
+7: "--...",
+8: "---..",
+9: "----.",
+".": ".-.-.-",
+",": "--..--",
+"?": "..--..",
+"'": ".----.",
+"!": "-.-.--",
+"/": "-..-.",
+"(": "-.--.",
+")": "-.--.-",
+"&": ".-...",
+":": "---...",
+";": "-.-.-.",
+"=": "-...-",
+"+": ".-.-.",
+"-": "-....-",
+_: "..--.-",
+'"': ".-..-.",
+$: "...-..-",
+"@": ".--.-.",
+" ": "/",
+};
+
+
+//Reverse the morseCode dictionary to get a lookup for Morse code to letters and numbers
+var reverseMorseCode = {};
+
+
+function translateButton_click() {
+
+    var inputField = document.getElementById("input");
+    var translateButton = document.getElementById("translate");
+    var outputField = document.getElementById("output");
+
+    var inputText = inputField.value.trim().toUpperCase();
+    if (inputField === "") {
+        outputField.textContent = "No Input Provided";
+        return;
+    }
+
+    if (inputText.indexOf(".") != -1) {
+        //Input contains dots, assuming it's Morse code and translating to text
+        var morseWords = inputText.split("/");
+        var translatedWords = morseWords.map((morseWord) => {
+            var morseChars = morseWord.split(" ");
+            return morseChars
+                .map((morseChar) => {
+                    return reverseMorseCode[morseChar] || morseChar;
+                })
+                .join("");
+        });
+        outputField.textContent = translatedWords.join(" ");
+    } else {
+        //Input is text, translating to Morse Code
+        var words = inputText.split(" ");
+        var translatedWords = words.map((word) => {
+            var chars = word.split("");
+            var morseChars = chars.map((char) => {
+                return morseCode[char] || char;
+            });
+            return morseChars.join(" ");
+        });
+        outputField.textContent = translatedWords.join("/");
+    }
+}
+
+
+function input_onChanged() {
+    var translateButton = document.getElementById("translate");
+    translateButton.click();
+    return false;
+}
+
+
+function onPageLoad() {
+
+    for (var key in morseCode) {
+        if (morseCode.hasOwnProperty(key)) {
+            var value = morseCode[key];
+            reverseMorseCode[value] = key;
+        }
+    }
+
+    var translateButton = document.getElementById("translate");
+    translateButton.addEventListener("click", translateButton_click);
+}
+
+
+
+</script>
+
+
+<style>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Mono", monospace;
+}
+body {
+  background-color: #5272ee;
+}
+.container {
+  background-color: #ffffff;
+  width: 90%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  padding: 3em;
+  border-radius: 1em;
+}
+h1 {
+  font-size: 1.5em;
+}
+label {
+  display: block;
+  font-weight: 600;
+  margin: 3em 0 0.3em 0;
+}
+textarea {
+  resize: none;
+  border: 1px solid black;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  width: 100%;
+  font-size: 2.0em;
+}
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+button {
+  background-color: #5272ee;
+  color: #ffffff;
+  border: none;
+  padding: 1em 2em;
+  border-radius: 0.3em;
+  outline: none;
+  margin: 1em 0;
+  cursor: pointer;
+}
+p {
+  font-weight: 600;
+}
+p span {
+  font-weight 400;
+  font-size: 1.6em;
+}
+
+
+</style>
+
+</head>
+
+<body onload="return onPageLoad();">
+    <div class="container">
+        <h1>Morse Code Translator</h1>
+        <br/>
+        <span>
+            Original at: https://codingartistweb.com/2023/09/morse-code-traslator
+            <br/>
+            <br/>
+            Improved by JMC to make it run in IE from Windows XP.
+        </span>
+        <label for="input">Enter Text Or Morse Code:</label>
+        <textarea id="input" rows="4" oninput="return input_onChanged();"></textarea>
+        <div class="btn-container">
+            <button id="translate">Translate</button>
+        </div>
+        <p>Translation: <span id="output"></span></p>
+    </div>
+</body>
+</html>
+
+
+
+
