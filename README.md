@@ -13,6 +13,6 @@ Improved by me, JMC, to make it compatible with the old Internet Explorer from W
 
 The software doesn't transmit the morse code and works completely offline.
 
-Disclaimer: The morso code software is provided as is and no warranties are given. It can be used for any purpose.
+Disclaimer: The morse code software is provided as is and no warranties are given. It can be used for any purpose.
 
     
