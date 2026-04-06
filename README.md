@@ -3,7 +3,7 @@ Morse code translator works in IE8 offline no transmission
 
 Use it:
 
-        [https://jmcabo.github.io/morse/morse.html|https://jmcabo.github.io/morse/morse.html]
+[https://jmcabo.github.io/morse/morse.html|https://jmcabo.github.io/morse/morse.html]
 
 Original from:
     
